@@ -1,3 +1,6 @@
+"""
+Challenge 3
+"""
 import re
 import string
 
@@ -9,6 +12,14 @@ char_table = { c:True for c in SUPPORTED_CHARACTER }
 
 
 class MalformedMatrix(Exception):
+    """
+    Thrown when
+
+    Notes:
+        Unvailable row/column medatata
+        Matrix data and its meta data are not matched together
+        Matrix contains unsupported character
+    """
     pass
 
 
@@ -18,7 +29,7 @@ def _regex_replace_symbols(match):
     return groups[0] + ' ' + groups[2]
 
 
-def parse_volume(text: str) ->  Tuple[int]:
+def _parse_volume(text: str) ->  Tuple[int]:
     # matching only 2 numbers and arbitrary spaces in between
     p = re.compile(r'\s*(\d+)\s+(\d+)\s*')
 
@@ -32,7 +43,7 @@ def parse_volume(text: str) ->  Tuple[int]:
     raise MalformedMatrix(f'Unavailable row/column numbers, first line: {text}')
 
 
-def checkif_data_sufficient(lines: List[str], row_num: str, col_num: str) -> bool:
+def _checkif_data_sufficient(lines: List[str], row_num: str, col_num: str) -> bool:
 
     if len(lines) < row_num + 1:
         return False
@@ -40,7 +51,7 @@ def checkif_data_sufficient(lines: List[str], row_num: str, col_num: str) -> boo
     return all([ len(line) >= col_num for line in lines[1:] ])
 
 
-def checkif_characters_valid(string_seq: List[str]) -> bool:
+def _checkif_characters_valid(string_seq: List[str]) -> bool:
     for char in string_seq:
         if not char_table.get(char, None):
             print(char)
@@ -54,6 +65,19 @@ def decode_string_matrix(
     script_file: Union[TextIO, None] = None
 ) -> str:
 
+    """
+    Prints all files in folder, 
+    if an extension is given, 
+    will only print the files with the given extension
+
+    Args:
+        script (str): folder to recursively search through for specific extensions
+        script_file (Union[TextIO, None]): extension of file type to filter by
+
+    Returns:
+        str: list of all filenames within path with matching extension
+    """
+
     assert script or script_file, 'Script or script file is required.'
 
     if script:
@@ -62,10 +86,10 @@ def decode_string_matrix(
         with open(script_file) as fd:
             lines = fd.readlines()
 
-    row_num, col_num = parse_volume(lines[0])
+    row_num, col_num = _parse_volume(lines[0])
 
-    if not checkif_data_sufficient(lines, row_num, col_num):
-        raise MalformedMatrix(f'Matrix data and its meta data are not match together. Meta data -> row number: {row_num}, column number: {col_num}')
+    if not _checkif_data_sufficient(lines, row_num, col_num):
+        raise MalformedMatrix(f'Matrix data and its meta data are not matched together. Meta data -> row number: {row_num}, column number: {col_num}')
 
     string_seq = [''] * row_num * col_num
 
@@ -74,7 +98,7 @@ def decode_string_matrix(
             idx = row_idx + col_idx * row_num
             string_seq[idx] = line_content[col_idx]
 
-    if not checkif_characters_valid(string_seq):
+    if not _checkif_characters_valid(string_seq):
         raise MalformedMatrix(f'Maxtrix contains invalid character.')
 
     strseq = ''.join(string_seq)
