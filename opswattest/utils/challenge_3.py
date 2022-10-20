@@ -12,14 +12,6 @@ char_table = { c:True for c in SUPPORTED_CHARACTER }
 
 
 class MalformedMatrix(Exception):
-    """
-    Thrown when
-
-    Notes:
-        Unvailable row/column medatata
-        Matrix data and its meta data are not matched together
-        Matrix contains unsupported character
-    """
     pass
 
 
@@ -66,16 +58,33 @@ def decode_string_matrix(
 ) -> str:
 
     """
-    Prints all files in folder, 
-    if an extension is given, 
-    will only print the files with the given extension
+    Decode text as string matrix. Replace symbols or spaces between two alphanumeric characters.
 
     Args:
-        script (str): folder to recursively search through for specific extensions
-        script_file (Union[TextIO, None]): extension of file type to filter by
+        script (str): multi line string as matrix data
+        script_file (Union[TextIO, None]): text file that contains matrix data
 
     Returns:
-        str: list of all filenames within path with matching extension
+        str: decoded string
+
+    Raises:
+        MalformedMatrix:
+            unvailable row/column medatata,
+            matrix data and its meta data are not matched together,
+            matrix contains unsupported character,
+
+    Example:
+        Input:
+            7 3
+            Tsi
+            h%x
+            i#
+            sM
+            $a
+            #t%
+            ir!
+        Output:
+            This is Matrix#  %!
     """
 
     assert script or script_file, 'Script or script file is required.'
