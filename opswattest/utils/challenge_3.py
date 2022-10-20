@@ -46,7 +46,6 @@ def _checkif_data_sufficient(lines: List[str], row_num: str, col_num: str) -> bo
 def _checkif_characters_valid(string_seq: List[str]) -> bool:
     for char in string_seq:
         if not char_table.get(char, None):
-            print(char)
             return False
 
     return True

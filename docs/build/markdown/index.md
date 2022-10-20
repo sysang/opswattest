@@ -54,3 +54,35 @@ Input:
 Output:
 
     This is Matrix#  %!
+
+
+### utils.challenge_1.find_different_character(s1: str, s2: str)
+Find the single different char between two input strings
+
+
+* **Parameters**
+
+    
+    * **s1** (*str*) – input string for comparison, contains only lower case ascii letters
+
+
+    * **s2** (*str*) – input string for comparison, contains only lower case ascii letters
+
+
+
+* **Returns**
+
+    different sequence index, different character
+
+
+
+* **Return type**
+
+    Tuple[int, str]
+
+
+
+* **Raises**
+
+    **InvalidInputString** – input string is not string,
+        input string contains any character other than lowercase ascii letter

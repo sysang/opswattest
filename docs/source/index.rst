@@ -11,3 +11,4 @@ opswattest documentation!
    :caption: Contents:
 
 .. autofunction:: utils.challenge_3.decode_string_matrix
+.. autofunction:: utils.challenge_1.find_different_character

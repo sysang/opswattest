@@ -2,128 +2,53 @@ import math
 import random
 import string
 
-
-def find_different_character(s1, s2):
-    prob1 = [ord(character) for character in s1]
-    prob2 = [ord(character) for character in s2]
-    # print('prob1: ', prob1)
-    # print('prob2: ', prob2)
-
-    routes = []
-    is_forward = True
-
-    while True:
-        prob1_cache = prob1
-        prob2_cache = prob2
-        distance = len(prob1)
-        step_point = math.ceil(distance / 2)
-
-        prob1 = prob1[0:step_point]
-        prob2 = prob2[0:step_point]
-
-        new_step = step_point if is_forward else step_point - distance
-        routes.append(new_step)
-
-        # print('routes: ', routes, sum(routes))
-        # print('distance: ', distance, ' - step_point: ', step_point, ' - prob1: ', prob1, ' - prob1_cache: ', prob1_cache)
-
-        if len(prob1) == 1 and sum(prob1) != sum(prob2):
-            return prob1[0], prob2[0], sum(routes) - 1
-
-        if sum(prob1) == sum(prob2):
-            prob1 = prob1_cache[step_point:]
-            prob2 = prob2_cache[step_point:]
-            is_forward = True
-        else:
-            is_forward = False
+from typing import Tuple
 
 
-# s1 = 'qwer1234'
-# s2 = 'qwer1235'
+SUPPORTED_CHARACTER = string.ascii_lowercase + string.digits
+char_table = { c:True for c in SUPPORTED_CHARACTER }
 
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert '4' == s1[pos]
-# assert '5' == s2[pos]
+class InvalidInputString(Exception):
+    pass
 
-# s1 = 'qwer1234'
-# s2 = 'qwer1224'
 
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert '3' == s1[pos]
-# assert '2' == s2[pos]
+def _checkif_characters_valid(string_seq: str) -> bool:
+    for char in string_seq:
+        if not char_table.get(char, None):
+            return False
 
-# s1 = 'Qwer1234'
-# s2 = 'qwer1234'
+    return True
 
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert 'Q' == s1[pos]
-# assert 'q' == s2[pos]
 
-# s1 = 'Qwer1234'
-# s2 = 'qwer1234'
+def find_different_character(s1: str, s2: str) -> Tuple[int, str]:
+    """
+    Find the single different char between two input strings
 
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert 'Q' == s1[pos]
-# assert 'q' == s2[pos]
+    Args:
+        s1 (str): input string for comparison, contains only lowercase ascii letters and digits
+        s2 (str): input string for comparison, contains only lowercase ascii letters and digits
 
-# s1 = 'qWer1234'
-# s2 = 'qwer1234'
+    Returns:
+        Tuple[int, str]: different sequence index, different character
 
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert 'W' == s1[pos]
-# assert 'w' == s2[pos]
 
-# s1 = 'qweR1234'
-# s2 = 'qwer1234'
+    Raises:
+        InvalidInputString:
+            inputs are not string,
+            input string contains any character other than lowercase ascii letters and digits
+    """
 
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert 'R' == s1[pos]
-# assert 'r' == s2[pos]
+    if not isinstance(s1, str) or not isinstance(s2, str):
+        raise InvalidInputString("Input is not string.")
 
-# s1 = 'qwer1234'
-# s2 = 'qwer0234'
+    if not _checkif_characters_valid(s1) or not _checkif_characters_valid(s2):
+        raise InvalidInputString('Input string contains any character other than lowercase ascii letters and digits.')
 
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert '1' == s1[pos]
-# assert '0' == s2[pos]
+    probe = s1 if len(s1) > len(s2) else s2
+    probe_size = len(probe)
 
-# s1 = 'qwer12345'
-# s2 = 'qwer12346'
+    for i in range(probe_size - 1):
+        if s1[i] != s2[i]:
+            return (i, probe[i])
 
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert '5' == s1[pos]
-# assert '6' == s2[pos]
-
-# s1 = 'Qwer12345'
-# s2 = 'qwer12345'
-
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert 'Q' == s1[pos]
-# assert 'q' == s2[pos]
-
-# s1 = 'qwer12345'
-# s2 = 'qwer22345'
-
-# diff1, diff2, pos = find_different_character(s1, s2)
-# print(diff1, diff2, pos)
-# assert '1' == s1[pos]
-# assert '2' == s2[pos]
-
-N = 10
-var_char = 'a'
-index = random.choice(range(N))
-s1 = ''.join(random.choices(string.ascii_letters + string.digits, k=N))
-s2 = s1[:index] + var_char + s1[index+1:]
-
-print(s1, s2)
-diff1, diff2, pos = find_different_character(s1, s2)
-print(diff1, diff2, s2[pos])
+    return (probe_size - 1, probe[-1])
