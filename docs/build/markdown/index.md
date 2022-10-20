@@ -6,27 +6,51 @@ contain the root `toctree` directive. -->
 
 
 ### utils.challenge_3.decode_string_matrix(script: str = '', script_file: Optional[TextIO] = None)
-Prints all files in folder,
-if an extension is given,
-will only print the files with the given extension
+Decode text as string matrix. Replace symbols or spaces between two alphanumeric characters.
 
 
 * **Parameters**
 
     
-    * **script** (*str*) – folder to recursively search through for specific extensions
+    * **script** (*str*) – multi line string as matrix data
 
 
-    * **script_file** (*Union**[**TextIO**, **None**]*) – extension of file type to filter by
+    * **script_file** (*Union**[**TextIO**, **None**]*) – text file that contains matrix data
 
 
 
 * **Returns**
 
-    list of all filenames within path with matching extension
+    decoded string
 
 
 
 * **Return type**
 
     str
+
+
+
+* **Raises**
+
+    **MalformedMatrix** – unvailable row/column medatata,
+        matrix data and its meta data are not matched together,
+        matrix contains unsupported character,
+
+
+### Example
+
+Input:
+
+    7 3
+    Tsi
+    h%x
+    i#
+    sM
+    $a
+    #t%
+    ir!
+
+Output:
+
+    This is Matrix#  %!
