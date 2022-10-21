@@ -45,7 +45,7 @@ ssssss
 ######
 iiiiii
 ssssss
-$$$$$$
+%%%%%%
 MMMMMM
 aaaaaa
 tttttt
@@ -56,7 +56,7 @@ xxxxxx
 ```
 
 Output: 
-> This is Matrix This is Matrix This is Matrix This is Matrix This is Matrix This is Matrix
+> This is Matrix This is Matrix This is Matrix This is Matrix This is Matrix This is Matrix@
 
 Example 2: `python3 main.py decode_matrix --script_file=path/to/text/file`
 
