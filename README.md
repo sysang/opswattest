@@ -2,9 +2,9 @@
 
 ## Dependencies
 
-Before checking the challenges please install packages: requests, fire.
-`pip install requests~=2.8.1`
-`pip install fire~=0.4.0 `
+Before checking the challenges please install packages: requests, fire. 
+`pip install requests~=2.8.1` 
+`pip install fire~=0.4.0` 
 
 ## Dev pependencies
 
@@ -22,7 +22,7 @@ Output:
 
 ## Challenge 2, find domain ip address
 
-Execute command: `python3 main.py domain_ip_address`, for argument description: `python3 main.py domain_ip_address`
+Execute command: `python3 main.py domain_ip_address`, for argument description: `python3 main.py domain_ip_address -h`
 
 Example: `python3 main.py domain_ip_address --qname=www.example.com`
 
@@ -32,7 +32,7 @@ Output:
 
 ## Challenge 3, decode text matrix
 
-Execute command: `python3 main.py decode_matrix`, for argument description: `python3 main.py decode_matrix`
+Execute command: `python3 main.py decode_matrix`, for argument description: `python3 main.py decode_matrix -h`
 
 Example 1: 
 ```
