@@ -10,5 +10,6 @@ opswattest documentation!
    :maxdepth: 4
    :caption: Contents:
 
-.. autofunction:: utils.challenge_3.decode_string_matrix
 .. autofunction:: utils.challenge_1.find_different_character
+.. autofunction:: utils.challenge_2.find_domain_ip_adress
+.. autofunction:: utils.challenge_3.decode_string_matrix
